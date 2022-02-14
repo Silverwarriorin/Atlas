@@ -5,28 +5,29 @@
 #include <ncurses.h>
 #include <locale.h>
 #include <time.h>
+#include <errno.h>
 
-typedef struct _win_border_struct {
-    chtype 	ls, rs, ts, bs,
-            tl, tr, bl, br;
-}WIN_BORDER;
+int msleep(long msec)
+{
+    struct timespec ts;
+    int res;
 
-typedef struct _WIN_struct {
+    if (msec < 0)
+    {
+        errno = EINVAL;
+        return -1;
+    }
 
-    int startx, starty;
-    int height, width;
-    WIN_BORDER border;
-}WIN;
+    ts.tv_sec = msec / 1000;
+    ts.tv_nsec = (msec % 1000) * 1000000;
 
-void init_win_params(WIN *p_win);
-void print_win_params(WIN *p_win);
-void create_box(WIN *win, bool flag);
+    do {
+        res = nanosleep(&ts, &ts);
+    } while (res && errno == EINTR);
 
-
-void waitFor (unsigned int secs) {
-    unsigned int retTime = time(0) + secs;   // Get finishing time.
-    while (time(0) < retTime);               // Loop until it arrives.
+    return res;
 }
+
 
 
 void startupdia() {
@@ -49,6 +50,8 @@ void startupdia() {
 }
 
 void credits() {
+    const char* atlas[21] = {"          _____                _____                    _____            _____                    _____          ","         /\\    \\              /\\    \\                  /\\    \\          /\\    \\                  /\\    \\         ","        /::\\    \\            /::\\    \\                /::\\____\\        /::\\    \\                /::\\    \\        ","       /::::\\    \\           \\:::\\    \\              /:::/    /       /::::\\    \\              /::::\\    \\       ","      /::::::\\    \\           \\:::\\    \\            /:::/    /       /::::::\\    \\            /::::::\\    \\      ","     /:::/\\:::\\    \\           \\:::\\    \\          /:::/    /       /:::/\\:::\\    \\          /:::/\\:::\\    \\     ","    /:::/__\\:::\\    \\           \\:::\\    \\        /:::/    /       /:::/__\\:::\\    \\        /:::/__\\:::\\    \\    ","   /::::\\   \\:::\\    \\          /::::\\    \\      /:::/    /       /::::\\   \\:::\\    \\       \\:::\\   \\:::\\    \\   ","  /::::::\\   \\:::\\    \\        /::::::\\    \\    /:::/    /       /::::::\\   \\:::\\    \\    ___\\:::\\   \\:::\\    \\  "," /:::/\\:::\\   \\:::\\    \\      /:::/\\:::\\    \\  /:::/    /       /:::/\\:::\\   \\:::\\    \\  /\\   \\:::\\   \\:::\\    \\ ","/:::/  \\:::\\   \\:::\\____\\    /:::/  \\:::\\____\\/:::/____/       /:::/  \\:::\\   \\:::\\____\\/::\\   \\:::\\   \\:::\\____\\","\\::/    \\:::\\  /:::/    /   /:::/    \\::/    /\\:::\\    \\       \\::/    \\:::\\  /:::/    /\\:::\\   \\:::\\   \\::/    /"," \\/____/ \\:::\\/:::/    /   /:::/    / \\/____/  \\:::\\    \\       \\/____/ \\:::\\/:::/    /  \\:::\\   \\:::\\   \\/____/ ","          \\::::::/    /   /:::/    /            \\:::\\    \\               \\::::::/    /    \\:::\\   \\:::\\    \\     ","           \\::::/    /   /:::/    /              \\:::\\    \\               \\::::/    /      \\:::\\   \\:::\\____\\    ","           /:::/    /    \\::/    /                \\:::\\    \\              /:::/    /        \\:::\\  /:::/    /    ","          /:::/    /      \\/____/                  \\:::\\    \\            /:::/    /          \\:::\\/:::/    /     ","         /:::/    /                                 \\:::\\    \\          /:::/    /            \\::::::/    /      ","        /:::/    /                                   \\:::\\____\\        /:::/    /              \\::::/    /       ","        \\::/    /                                     \\::/    /        \\::/    /                \\::/    /        ","         \\/____/                                       \\/____/          \\/____/                  \\/____/         "};
+
     init_pair(1,COLOR_MAGENTA,COLOR_MAGENTA);
     init_pair(2,COLOR_MAGENTA,COLOR_BLACK);
 
@@ -74,15 +77,24 @@ void credits() {
     touchwin(win);
     wrefresh(win);
 
-    waitFor(2);
+    msleep(2500);
+
+
+    for (int i = 0; i < 21; ++i) {
+        wmove(win,30+i,20);
+        wprintw(win,atlas[i]);
+        touchwin(win);
+        wrefresh(win);
+        msleep(500);
+    }
 
 
 
 
 
+    getch();
+    endwin();
 
-
-    waitFor(5);
 }
 void startup() {
     // Initialize the screen
