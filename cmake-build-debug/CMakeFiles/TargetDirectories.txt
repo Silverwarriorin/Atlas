@@ -1,3 +1,3 @@
-C:/Users/zachr/CLionProjects/Atlas/cmake-build-debug/CMakeFiles/Atlas.dir
-C:/Users/zachr/CLionProjects/Atlas/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/zachr/CLionProjects/Atlas/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/gabrielwomelsdorf/Projects/C/Atlas/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/gabrielwomelsdorf/Projects/C/Atlas/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/gabrielwomelsdorf/Projects/C/Atlas/cmake-build-debug/CMakeFiles/Atlas.dir
