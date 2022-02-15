@@ -129,14 +129,46 @@ void credits() {
         msleep(100);
     }
 
-
-
+    msleep(2000);
+    // Removes the ATLAS logo
+    wattron(win, COLOR_PAIR(3));
+    for (int i = 0; i < 22; ++i) {
+        wmove(win,4+i,15);
+        wprintw(win,atlas[i]);
+        touchwin(win);
+        wrefresh(win);
+        msleep(100);
+    }
 
 
     getchar();
     endwin();
 
 }
+
+
+void drawui() {
+
+    init_pair(1,COLOR_MAGENTA,COLOR_MAGENTA);
+    init_pair(2,COLOR_CYAN,COLOR_BLACK);
+    init_pair(3,COLOR_BLACK,COLOR_BLACK);
+
+    WINDOW *win = newwin(30,90,1,1);
+    wattron(win, COLOR_PAIR(1));
+    box(win, '*', '*');
+    touchwin(win);
+    wrefresh(win);
+
+    msleep(200);
+
+    move(50,50);
+    box(win, '*', '*');
+    touchwin(win);
+    wrefresh(win);
+
+}
+
+
 void startup() {
     // Initialize the screen
     initscr();
@@ -155,8 +187,6 @@ void startup() {
 
 
 int main() {
-
-
     setlocale(LC_ALL, "");
     startup();
     return 0;
