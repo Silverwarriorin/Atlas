@@ -72,8 +72,8 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 
 build cmake_object_order_depends_target_Atlas: phony || CMakeFiles/Atlas.dir
 
-build CMakeFiles/Atlas.dir/main.c.o: C_COMPILER__Atlas_Debug /home/zachary/CLionProjects/Atlas/main.c || cmake_object_order_depends_target_Atlas
-  DEP_FILE = CMakeFiles/Atlas.dir/main.c.o.d
+build CMakeFiles/Atlas.dir/backend_init.c.o: C_COMPILER__Atlas_Debug /home/zachary/CLionProjects/Atlas/backend_init.c || cmake_object_order_depends_target_Atlas
+  DEP_FILE = CMakeFiles/Atlas.dir/backend_init.c.o.d
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/Atlas.dir
   OBJECT_FILE_DIR = CMakeFiles/Atlas.dir
@@ -86,7 +86,7 @@ build CMakeFiles/Atlas.dir/main.c.o: C_COMPILER__Atlas_Debug /home/zachary/CLion
 #############################################
 # Link the executable Atlas
 
-build Atlas: C_EXECUTABLE_LINKER__Atlas_Debug CMakeFiles/Atlas.dir/main.c.o | /usr/lib/libcurses.so /usr/lib/libform.so
+build Atlas: C_EXECUTABLE_LINKER__Atlas_Debug CMakeFiles/Atlas.dir/backend_init.c.o | /usr/lib/libcurses.so /usr/lib/libform.so
   FLAGS = -g
   LINK_FLAGS = -rdynamic
   LINK_LIBRARIES = -lcurses  -lform
